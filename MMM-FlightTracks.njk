@@ -1,0 +1,57 @@
+<table border=0 cellpadding=0 cellspacing=0 border-collapse=collapse">
+    <td class="name {% if active %} blink {% endif %}"><b>⌚</b>&nbsp;</td>
+    <td class="{% if active %}value-active{% else %}value{% endif %}">
+      {{timestamp}} {%if curr_count != 0 %} <span style="font-size: 0.8em;">({{curr_count}} of {{max_count}})</span> {% endif %}
+    </td>
+  </tr>
+  
+  {% if callsign != "n/a" and airline != "n/a" %}
+  <tr>
+    <td class="name">⚑&nbsp;</td>
+    <td class="{%if active %}value-active{%else%}value{% endif %}">{{callsign}} <span style="font-size: 0.96em;">({{airline | truncate(config.max_width - 7)}})</span></td>
+  </tr>
+  {% elif callsign != "n/a" and airline == "n/a" %}
+    <tr>
+    <td class="name">⚑&nbsp;</td>
+    <td class="{%if active %}value-active{%else%}value{% endif %}">{{callsign}}</td>
+  </tr>
+  {% endif %}
+
+  {% if aircraft != "n/a" %} 
+  <tr>
+    <td class="name">✈&nbsp;</td>
+    <td class="{%if active %}value-active{%else%}value{% endif %}">{{aircraft | truncate(config.max_width) }}</td>
+  </tr>
+  {% endif %}
+
+  {% if altitude != "n/a" %} 
+  <tr>
+    <td class="name">ᨒ&nbsp;</td>
+    <td class="{%if active %}value-active{%else%}value{% endif %}">{{altitude}} {%if config.units=="IMPERIAL" %}ft{%else%}m{% endif %}</td>
+  </tr>
+  {% endif %}
+
+  {% if velocity != "n/a" and track != "n/a" %} 
+  <tr>
+    <td class="name">➢&nbsp;</td>
+    <td class="{%if active %}value-active{% else %}value{% endif %}">{{track}} at {{velocity}} {%if config.units=="IMPERIAL" %}mph{%else%}kph{% endif %}</td>
+  </tr>
+  {% endif %}
+
+  {% if route[0] != "n/a" %} 
+  <tr>
+    <td class="name">⟴&nbsp;</td>
+    <td class="{%if active %}value-active{%else%}value{% endif %}">{{route[0]}} <span style="font-size: 0.96em;">({{route[1] | truncate(config.max_width)}})</span></td>
+  </tr>
+  {% endif %}
+
+  {% if route[2] != "n/a" %} 
+  <tr>
+    <td class="name">&nbsp;</td>
+    <td class="{%if active %}value-active{%else%}value{% endif %}">{{route[2]}} <span style="font-size: 0.96em;">({{route[3] | truncate(config.max_width)}})</span></td>
+  </tr>
+  {% endif %}
+
+</table>
+
+

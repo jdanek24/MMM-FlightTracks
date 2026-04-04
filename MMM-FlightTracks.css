@@ -1,0 +1,25 @@
+.MMM-FlightTracks .blink {
+    animation: blink-animation 1s linear infinite;
+}
+
+.MMM-FlightTracks .name {
+  text-align:right;
+  width:5%; 
+  color: #bbbbbb;
+  font-size:19px;
+  line-height: 1.3em;
+}
+
+.MMM-FlightTracks .value-active {
+  text-align:left;
+  color: #bbbbbb;
+  font-size:19px;
+  line-height: 1.3em;
+}
+
+.MMM-FlightTracks .value {
+  text-align:left;
+  color: #888888;
+  font-size:19px;
+  line-height: 1.3em;
+}
