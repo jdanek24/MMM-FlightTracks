@@ -6,10 +6,10 @@ MMM-FlightTracks is a flight tracking module for [MagicMirror](https://github.co
 
 ## Description
 
-The module will display all flights entering a rectangular location specified as either;
+The module will display all flights entering an area, specified as either;
 
  * A bounding box of latitude and longitude coordinates
- * Width (km) and height (km) distances centered about a postal code
+ * A rectangular location based on a postal code
  
  Flight data includes;
 
@@ -45,7 +45,7 @@ While most of the flight data can be obtained through subscription based APIs, m
 
 * [Github vradarserver/standing-data](https://github.com/vradarserver/standing-data) for the airline, aircraft, departure & destination route, including the airport code, city, and country. 
     * The latest repository versions have been converted to the following SQLite databases;
-        * *data/vradarserver-airline.db* - airline descriptions
+        * *data/vradarserver-airline.db* - airline name
         * *data/vradarserver-route.db* - airline routes
         * *data/vradarserver-airport.db* - airport codes IATA, ICAO, location, and country
         * *data/vradarserver-aircraft.db* - aircraft descriptions (prioritized over OpenSky's aircraft data)
@@ -108,7 +108,7 @@ Next, configure the MMM-FlightTrack module within *config/config.js* file. The f
 | lat_max | n/a | Bounding box based coordinates, max latitude, e.g. 40.5661   | float | 
 | lon_min | n/a | Bounding box based coordinates, min longitude, e.g. -74.5219   | float | 
 | lon_max | n/a | Bounding box based coordinates, max longitude, e.g. -74.2764   | float | 
-| postal_code | n/a | Postal code based coordinates. This entry will override any bounding box entries, e.g. "08817" | str |
+| postal_code | n/a | Postal code based coordinates, e.g. "08817". This entry overrides the bounding box entries | str |
 | postal_width | 10 |	Postal code width (longitudinal) | int (km) | 
 | postal_height | 10 |	Postal code height (latitudinal) | int (km) | 
 | max_width | 28 | Truncation length for airline, aircraft, and airport text fields to fit within display location | int|
