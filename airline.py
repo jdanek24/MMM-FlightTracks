@@ -1,3 +1,4 @@
+'''This module contains airline functions'''
 __author__ = "jdanek"
 
 import logging
@@ -9,15 +10,15 @@ logger = logging.getLogger("flight_tracks")
 
 # default airline dictionary
 airline_dict = {
-    "AAL":"American", "DAL":"Delta", "UAL":"United", "CSN":"China Southern", "SWA":"Southwest", "CES":"China Eastern", "CCA":"Air China", "RYR":"Ryanair", "EZY":"EasyJet", "IGO":"IndiGo", "THY":"Turkish", 
-    "JBU":"JetBlue", "SKW":"SkyWest", "CSC":"Sichuan", "DLH":"Lufthansa", "CHH":"Hainan", "UAE":"Emirates", "KLM":"KLM", "BAW":"British Air", "FDX":"FedEx", "RPA":"Republic", "CSZ":"Shenzhen", 
-    "CXA":"XiamenAir", "TAM":"LATAM", "AIC":"Air India", "UPS":"UPS", "ACA":"Air Canada", "CPA":"Cathay Pacific", "AFR":"Air France", "KAL":"Korean Air", "CQH":"Spring", "SIA":"Singapore", 
-    "AZU":"Azul", "JAL":"Japan", "EDV":"Endeavor Air", "ENY":"Envoy Air", "EJA":"NetJets", "GLO":"GOL", "PGT":"Pegasus", "ANA":"All Nippon", "IBE":"Iberia", "AFL":"Aeroflot", "SVA":"Saudia", 
-    "CDG":"Shandong", "FFT":"Frontier", "VJC":"VietJet Air", "NKS":"Spirit", "SAS":"SAS", "QFA":"Qantas", "AXB":"Air India", "AVA":"Avianca", "CAL":"China", "JIA":"PSA", "SWR":"Swiss", "CDC":"Zhejiang", 
-    "EVA":"EVA Air", "FIN":"Finnair", "VLG":"Vueling", "EXS":"Jet2", "HVN":"Vietnam", "AXM":"AirAsia", "CXK":"ATP", "GCR":"Tianjin", "TOM":"TUI", "EWG":"Eurowings", "ASA":"Alaska", "AUA":"Austrian", 
-    "WJA":"WestJet", "TAP":"TAP Air", "CBJ":"Beijing", "MAS":"Malaysia", "UEA":"Chengdu", "WMT":"Wizz Air", "DKH":"Juneyao", "GTI":"Atlas Air", "WZZ":"Wizz Air", "ETH":"Ethiopian", "VIV":"VivaAerobus", 
-    "AIQ":"Air Asia", "CSH":"Shanghai", "CMP":"Copa", "THA":"Thai", "AAR":"Asiana", "LAN":"LATAM", "TGW":"Scoot", "VOI":"Volaris", "ARG":"Aerolineas", "AEE":"Aegean", "CHB":"West Air", "LKE":"Lucky Air", 
-    "CUA":"China United", "LOT":"LOT Polish", "LNK":"Airlink", "HXA":"China", "LXJ":"Flexjet", "BEL":"Brussels", "KNE":"Flynas", "CEB":"Cebu", "RYS":"Buzz", "LPE":"LATAM Peru", "NSZ":"Norwegian Air", 
+    "AAL":"American", "DAL":"Delta", "UAL":"United", "CSN":"China Southern", "SWA":"Southwest", "CES":"China Eastern", "CCA":"Air China", "RYR":"Ryanair", "EZY":"EasyJet", "IGO":"IndiGo", "THY":"Turkish",
+    "JBU":"JetBlue", "SKW":"SkyWest", "CSC":"Sichuan", "DLH":"Lufthansa", "CHH":"Hainan", "UAE":"Emirates", "KLM":"KLM", "BAW":"British Air", "FDX":"FedEx", "RPA":"Republic", "CSZ":"Shenzhen",
+    "CXA":"XiamenAir", "TAM":"LATAM", "AIC":"Air India", "UPS":"UPS", "ACA":"Air Canada", "CPA":"Cathay Pacific", "AFR":"Air France", "KAL":"Korean Air", "CQH":"Spring", "SIA":"Singapore",
+    "AZU":"Azul", "JAL":"Japan", "EDV":"Endeavor Air", "ENY":"Envoy Air", "EJA":"NetJets", "GLO":"GOL", "PGT":"Pegasus", "ANA":"All Nippon", "IBE":"Iberia", "AFL":"Aeroflot", "SVA":"Saudia",
+    "CDG":"Shandong", "FFT":"Frontier", "VJC":"VietJet Air", "NKS":"Spirit", "SAS":"SAS", "QFA":"Qantas", "AXB":"Air India", "AVA":"Avianca", "CAL":"China", "JIA":"PSA", "SWR":"Swiss", "CDC":"Zhejiang",
+    "EVA":"EVA Air", "FIN":"Finnair", "VLG":"Vueling", "EXS":"Jet2", "HVN":"Vietnam", "AXM":"AirAsia", "CXK":"ATP", "GCR":"Tianjin", "TOM":"TUI", "EWG":"Eurowings", "ASA":"Alaska", "AUA":"Austrian",
+    "WJA":"WestJet", "TAP":"TAP Air", "CBJ":"Beijing", "MAS":"Malaysia", "UEA":"Chengdu", "WMT":"Wizz Air", "DKH":"Juneyao", "GTI":"Atlas Air", "WZZ":"Wizz Air", "ETH":"Ethiopian", "VIV":"VivaAerobus",
+    "AIQ":"Air Asia", "CSH":"Shanghai", "CMP":"Copa", "THA":"Thai", "AAR":"Asiana", "LAN":"LATAM", "TGW":"Scoot", "VOI":"Volaris", "ARG":"Aerolineas", "AEE":"Aegean", "CHB":"West Air", "LKE":"Lucky Air",
+    "CUA":"China United", "LOT":"LOT Polish", "LNK":"Airlink", "HXA":"China", "LXJ":"Flexjet", "BEL":"Brussels", "KNE":"Flynas", "CEB":"Cebu", "RYS":"Buzz", "LPE":"LATAM Peru", "NSZ":"Norwegian Air",
     "AMX":"AeroMéxico", "RLH":"Ruili", "NJE":"NetJets", "TBA":"Tibet", "PDT":"Piedmont", "ITY":"ITA", "JZA":"Jazz", "SBI":"S7", "TVF":"Transavia", "ETD":"Etihad", "POE":"Porter", "RAM":"Royal Air", 
     "PRO":"Propair", "MXY":"Breeze", "ICE":"Icelandair", "QTR":"Qatar", "VJT":"VistaJet", "TCT":"Transcontinental", "MSR":"Egypt Air", "EPA":"Donghai", "HKE":"Hong Kong", "CHX":"Hubschrauber", 
     "BTI":"Air Baltic", "HOP":"HOP", "ANZ":"Air New Zealand", "OMA":"Oman Air", "BPX":"Phoenix", "ERU":"Embry Riddle", "QDA":"Qingdao", "CBG":"GX", "ASH":"Mesa", "JYH":"9 Air", "TSC":"Air Transat", 
@@ -101,8 +102,8 @@ airline_dict = {
     "PRG":"Empresa", "HVY":"SkyBus Air", "TAY":"ASL", "IYE":"Yemenia", "XGO":"Airgo", "PTA":"Parata Air", "HYP":"Hyperion", "HAS":"Hamburg", "RXA":"Regional", "XAV":"Aviaprom", "RAC":"Icar Air", 
     "CGE":"Nelson College", "HYS":"HiSky Europe", "GRV":"Epsilon", "BOG":"Live Oak Banking", "AUV":"Asia Union", "SEY":"Air Seychelles", "CHR":"Chairman Airmotive", "UCM":"Central Missouri", "SWE":"Svenskt", 
     "SIV":"Slovenian AF", "CYG":"Yana", "TEU":"TAG", "LZB":"Bulgaria Air", "IFC":"Indian AF", "BVN":"Baron", "JON":"Jonair", "FGG":"flyGlobal", "TLR":"Air Libya", "VLZ":"Volare", "CWN":"Crown", 
-    "NUA":"United Nigeria", "HTT":"Latitude", "DTH":"Tassili", "AWH":"Aerowest", "EDL":"Bavarian Police", "GHP":"Colvin", "TTN":"Lip-Avia", "GLR":"Central Mountain", "BEZ":"Kingfisher Air", "CYZ":"China Postal",
-    "DGT":"Digital Equipment", "GRD":"National Grid", "LTG":"LATAM", "GBF":"Global", "SWN":"West Air Sweden", "LCT":"TAR Aerolineas", "PIK":"Polizei", "FGC":"Cataluna", "PTL":"Providence", 
+    "NUA":"United Nigeria", "HTT":"Latitude", "DTH":"Tassili", "AWH":"Aerowest", "EDL":"Bavarian Police", "GHP":"Colvin", "TTN":"Lip-Avia", "GLR":"Central Mountain", "BEZ":"Kingfisher Air", 
+    "CYZ":"China Postal", "DGT":"Digital Equipment", "GRD":"National Grid", "LTG":"LATAM", "GBF":"Global", "SWN":"West Air Sweden", "LCT":"TAR Aerolineas", "PIK":"Polizei", "FGC":"Cataluna", "PTL":"Providence", 
     "LXC":"CAE", "STA":"Star", "PHL":"Phillips", "FYG":"Flying Service", "FAF":"Force Aerienne", "GCC":"General Electric", "CEE":"C-Air", "SAE":"Tamara", "IPT":"Interport", "DST":"Aex Air", 
     "ITE":"Interestatal", "ECA":"Excellent Air", "MXA":"Mexicana", "DMR":"Helidosa", "AOM":"Aom-Minerve", "ANK":"Aero Nomad", "GAG":"GreyBird", "CGG":"Walmart", "TAG":"Tag", "SRP":"Polizei", 
     "ETP":"Empire", "FAH":"ASL", "CCP":"Grand Holdings", "BGF":"28th Air Detachment", "IGA":"Skytaxi", "RJC":"Richmor", "PPA":"Propheter", "TJT":"Twin Jet", "CVK":"CAVOK Air", "PPU":"Polish Air", 
@@ -124,7 +125,7 @@ airline_dict = {
     "SCQ":"OSM Academy", "NCJ":"North Central", "LXP":"LAN", "OOM":"Zoom", "ICL":"CAL", "SAT":"SATA Air", "EAL":"Eastern", "EAU":"Elitavia"
 }
 
-# Global Vars 
+# Global Vars
 SCRIPT_DIR = Path(__file__).parent.resolve()
 DB_VRADARSERVER_AIRLINE = "./data/vradarserver-airline.db"
 
@@ -133,21 +134,22 @@ logger = logging.getLogger("flight_tracks")
 
 
 def get_airline(callsign) -> str:
-    # lookup airline based on callsign
-    # perform lookup using embedded airline_dict 
-    # if not found, then try vradarserver database (vradarserver_airline.db)
+    '''
+    Lookup airline based on callsign using embedded airline_dict
+    If not found, then try vradarserver database (vradarserver_airline.db)
+    '''
 
     desc = "n/a"
-    logger.debug(f"get_airline: callsign: %s", callsign)
+    logger.debug("get_airline: callsign: %s", callsign)
     if not callsign or len(callsign) < 3:
         return desc
-    
-    # lookup airline within airline_dict 
+
+    # Lookup airline within airline_dict
     try:
         desc = airline_dict[callsign[:3]]
-        logger.debug(f"get_airline: Dictionary result: %s", desc)
+        logger.debug("get_airline: Dictionary result: %s", desc)
     except KeyError:
-        logger.debug(f"get_airline: Dictionary result: n/a")
+        logger.debug("get_airline: Dictionary result: n/a")
 
     if desc == "n/a":
         # Connect to DB_VRADARSERVER_AIRLINE
@@ -158,8 +160,8 @@ def get_airline(callsign) -> str:
         row = cursor.fetchone()
         if row:
             desc = row[0]
-            logger.debug(f"get_airline: Database result: %s", desc)
+            logger.debug("get_airline: Database result: %s", desc)
         else:
-            logger.debug(f"get_airline: Database result: n/a")
-        conn.close()     
+            logger.debug("get_airline: Database result: n/a")
+        conn.close()
     return desc

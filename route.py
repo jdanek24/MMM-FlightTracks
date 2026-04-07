@@ -1,3 +1,4 @@
+'''This module contains flight routing functions'''
 __author__ = "jdanek"
 
 import logging
@@ -5,7 +6,7 @@ import sqlite3
 from pathlib import Path
 
 
-# Global Vars 
+# Global Vars
 SCRIPT_DIR = Path(__file__).parent.resolve()
 DB_VRADARSERVER_ROUTE = "./data/vradarserver-route.db"
 DB_VRADARSERVER_AIRPORT = "./data/vradarserver-airport.db"
@@ -43,53 +44,55 @@ country_dict = {
  }
 
 
-def remove_duplicates(str) -> str:
-    words = str.split("-")
+def remove_route_duplicates(route) -> str:
+    '''Removes duplicated routes'''
+    words = route.split("-")
     result = "-".join(sorted(set(words), key=words.index))
-    logger.debug(f"remove_duplicates: str: %s, result: %s", str, result)
+    logger.debug("remove_route_duplicates: str: %s, result: %s", route, result)
     return result
 
 
 def get_route(country_code, call_sign) -> tuple:
-    # lookup route based on icao24 value
-    logger.debug(f"get_route: call_sign: %s", call_sign)
+    '''Get the route's starting and ending airport code and location'''
+    logger.debug("get_route: call_sign: %s", call_sign)
     start_airport = "n/a"
     start_location = "n/a"
     end_airport = "n/a"
     end_location = "n/a"
 
+
     if not call_sign or len(call_sign) < 2:
         return start_airport, start_location, end_airport, end_location
-    
-    # connect to Route database
+
+    # Connect to Route database
     conn = sqlite3.connect(SCRIPT_DIR / DB_VRADARSERVER_ROUTE)
     cursor = conn.cursor()
 
     cursor.execute("SELECT AirportCodes FROM route WHERE Callsign = ?", (call_sign,))
     row = cursor.fetchone()
     if row:
-        route = row[0]      
-        # dedupe route list and save starting and ending airports
-        deduped = remove_duplicates(route)
+        route = row[0]
+        # Dedupe route list and save starting and ending airports
+        deduped = remove_route_duplicates(route)
         airport = deduped.split("-")
         start_airport = airport[0]
         end_airport = airport[-1]
     conn.close()
 
-    #  convert ICAO to IATA airport code (if available) 
+    #  Convert ICAO to IATA airport code (if available)
     if start_airport != "n/a" and end_airport != "n/a":
-        # connect to Airport database
+        # Connect to Airport database
         conn = sqlite3.connect(SCRIPT_DIR / DB_VRADARSERVER_AIRPORT)
         cursor = conn.cursor()
 
-        # starting airport
+        # Starting airport
         cursor.execute("SELECT IATA, Location, CountryISO2 FROM airport WHERE ICAO = ?", (start_airport,))
         row = cursor.fetchone()
         if row:
             if row[0] and len(row[0]) > 1:
-                start_airport =  row[0]  
+                start_airport =  row[0]
 
-             # get location (city) and country of airport
+             # Get location (city) and country of airport
             if row[1] and row[2]:
                 start_location = row[1]
                 if row[2] != country_code:
@@ -97,16 +100,16 @@ def get_route(country_code, call_sign) -> tuple:
                         country = country_dict[row[2]]
                         start_location = start_location + ", " + country
                     except KeyError:
-                        start_location =start_location
+                        pass
 
-        # ending airport
+        # Ending airport
         cursor.execute("SELECT IATA, Location, CountryISO2 FROM airport WHERE ICAO = ?", (end_airport,))
         row = cursor.fetchone()
         if row:
             if row[0] and len(row[0]) > 1:
-                end_airport =  row[0]  
+                end_airport =  row[0]
 
-             # get location (city) and country of airport
+             # Get location (city) and country of airport
             if row[1] and row[2]:
                 end_location = row[1]
                 if row[2] != country_code:
@@ -114,10 +117,10 @@ def get_route(country_code, call_sign) -> tuple:
                         country = country_dict[row[2]]
                         end_location = end_location + ", " + country
                     except KeyError:
-                        end_location = end_location
+                        pass
 
         conn.close()
-    
-    logger.debug(f"get_route: start_airport: %s, start_location: %s, end_airport: %s, end_location: %s", start_airport, start_location, end_airport, end_location)
-    return start_airport, start_location, end_airport, end_location
 
+    logger.debug("get_route: start_airport: %s, start_location: %s, end_airport: %s, end_location: %s",
+                 start_airport, start_location, end_airport, end_location)
+    return start_airport, start_location, end_airport, end_location

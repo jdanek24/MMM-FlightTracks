@@ -1,3 +1,4 @@
+'''This module contains the SQLite conversion script for vradarserver airport data'''
 __author__ = "jdanek"
 
 import os
@@ -8,7 +9,7 @@ CSV_FOLDER = "../data/vradarserver/standing-data/airports"
 DB_FILE = "../data/vradarserver-airport.db"
 
 def get_csv_files(folder):
-    # Recursively collect all CSV files
+    '''Recursively collect all CSV files'''
     csv_files = []
     for root, _, files in os.walk(folder):
         for file in files:
@@ -18,6 +19,7 @@ def get_csv_files(folder):
 
 
 def main():
+    '''Main function'''
     conn = sqlite3.connect(DB_FILE)
 
     csv_files = get_csv_files(CSV_FOLDER)
@@ -26,7 +28,6 @@ def main():
     first = True
     for file in csv_files:
         try:
-            # print(f"Processing: {file}")
             df = pd.read_csv(file)
             df_selected = df[['ICAO', 'IATA', 'Location', 'CountryISO2']]
 

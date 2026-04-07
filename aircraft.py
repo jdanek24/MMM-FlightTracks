@@ -1,3 +1,4 @@
+'''This module contains aircraft functions'''
 __author__ = "jdanek"
 
 import logging
@@ -5,7 +6,7 @@ import sqlite3
 from pathlib import Path
 
 
-# Global Vars 
+# Global Vars
 SCRIPT_DIR = Path(__file__).parent.resolve()
 DB_OPENSKY_AIRCRAFT= "./data/opensky-aircraft.db"
 DB_VRADARSERVER_AIRCRAFT = "./data/vradarserver-aircraft.db"
@@ -13,13 +14,13 @@ DB_VRADARSERVER_AIRCRAFT = "./data/vradarserver-aircraft.db"
 # Init logger
 logger = logging.getLogger("flight_tracks")
 
-
 def get_aircraft(icao24) -> str:
-    # lookup aircraft based on icao24 value
-    # perform lookup using vradarserver database (vradarserver_aircraft.db)
-    # if not found, then try opensky database (opensky_aircraft.db)
+    '''
+    Lookup aircraft based on icao24 value using vradarserver database (vradarserver_aircraft.db)
+    If not found, then try opensky database (opensky_aircraft.db)
+    '''
 
-    logger.debug(f"get_aircraft: icao24: %s", icao24)
+    logger.debug("get_aircraft: icao24: %s", icao24)
     desc = "n/a"
     if not icao24 or len(icao24) < 6:
         return desc
@@ -44,5 +45,5 @@ def get_aircraft(icao24) -> str:
             desc = row[0]
         conn.close()
 
-    logger.debug(f"get_aircraft: desc: %s", desc)        
+    logger.debug("get_aircraft: desc: %s", desc)
     return desc

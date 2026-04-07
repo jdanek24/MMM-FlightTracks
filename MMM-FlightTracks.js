@@ -3,6 +3,8 @@
  * @author jdanek
  */
 
+/*global Module, Log */
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 Module.register("MMM-FlightTracks", {
@@ -78,7 +80,7 @@ Module.register("MMM-FlightTracks", {
 
 				if( flights.length > 1) {
 					const runLoopWithDelay = async () => {
-						curr_count = 0;
+						var curr_count = 0;
 						for (const flight of flights) {
 							this.flight_info = flight;
 							this.flight_info.active = true;
